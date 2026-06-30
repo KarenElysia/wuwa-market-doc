@@ -111,16 +111,17 @@
   .stat b{font-family:'DotGothic16'; font-size:1.3rem; color:var(--orange-deep); display:block;}
   .stat span{font-size:0.74rem; color:var(--ink-soft); font-weight:700;}
 
-  .rcol{flex:1; position:relative; opacity:0; animation:rise .8s ease forwards .25s;}
+  .rcol{flex:1; position:relative; opacity:0; animation:rise .8s ease forwards .25s; padding-top:28px;}
   .shelf{
     background:var(--wood); border:5px solid var(--ink); border-radius:18px;
     padding:22px; box-shadow:9px 9px 0 rgba(58,46,38,0.25);
     display:grid; grid-template-columns:repeat(4,1fr); gap:13px;
-    position:relative; z-index:2;
+    position:relative; z-index:2; margin-top:14px;
   }
   .shelf-label{
-    position:absolute; top:-16px; left:18px; background:var(--ink); color:#fff;
+    position:absolute; top:0; left:18px; background:var(--ink); color:#fff;
     font-family:'DotGothic16'; font-size:0.74rem; padding:6px 14px; border-radius:8px;
+    z-index:3; white-space:nowrap;
   }
   .item{
     aspect-ratio:1; background:var(--cream-2); border:3px solid var(--ink); border-radius:10px;
