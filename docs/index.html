@@ -257,7 +257,7 @@
       <div class="stats">
         <div class="stat"><b>10分</b><span>ごとに動く相場</span></div>
         <div class="stat"><b>4地域</b><span>異なる特産品・鉱石</span></div>
-        <div class="stat"><b>3コンテンツ</b><span>釣り・採掘・討伐</span></div>
+        <div class="stat"><b>5コンテンツ</b><span>釣り・採掘・討伐・家・フリマ</span></div>
       </div>
     </div>
     <div class="rcol">
@@ -313,7 +313,13 @@
         <div class="stage dot">STAGE 06</div>
         <div class="icn">⚔️</div>
         <h3>討つ</h3>
-        <p>残像に挑み、三すくみのワンタップ勝負。勝てば武器や音骸がランダムでドロップする。</p>
+        <p>残像に5ターン制で挑む。三すくみを5手先まで予約し、勝てば個体値つきの武器や音骸がドロップする。</p>
+      </div>
+      <div class="loop-card reveal">
+        <div class="stage dot">STAGE 07</div>
+        <div class="icn">🏠</div>
+        <h3>飾る</h3>
+        <p>1Fから3Fまで拡張できる自分の家。レア魚・討伐装備・宝物を飾り、訪問やギフトで交流する。</p>
       </div>
     </div>
   </div>
@@ -322,7 +328,7 @@
 <section class="features" id="features">
   <div class="wrap">
     <div class="sec-label reveal">商人の道</div>
-    <h2 class="sec-title reveal">市場・宝物庫・釣り・採掘・討伐。</h2>
+    <h2 class="sec-title reveal">市場・宝物庫・釣り・採掘・討伐・家。</h2>
 
     <div class="feature reveal">
       <div>
@@ -333,6 +339,7 @@
           <li>10分ごとに自動更新される変動相場</li>
           <li>地域ごとに異なる特産品ボーナス</li>
           <li>稼ぎすぎを抑える日次のバランス調整</li>
+          <li>討伐の名声が高いほど、フリマの出品枠と価格設定の自由度が上がる</li>
         </ul>
       </div>
       <div>
@@ -380,6 +387,8 @@
           <li>★1の雑魚から★5のフィッシュキングまで5段階</li>
           <li>地域ごとに釣れる魚の傾向が変わる</li>
           <li>図鑑を埋めるほど称号とクールタイム短縮が手に入る</li>
+          <li>魚屋で料理すれば、次の売却にボーナスが付く</li>
+          <li>ごく低確率で、釣りから音骸がドロップすることも</li>
         </ul>
       </div>
     </div>
@@ -398,6 +407,7 @@
           <li>今州・リナシータ・ラハイロイ・ブラックショアで採れる鉱石が違う</li>
           <li>掘削機はLv0〜5まで強化可能、最大50個まとめ掘りも</li>
           <li>たまに「大豊作」演出で通常以上の鉱石が手に入る</li>
+          <li>採掘した鉱石は鍛冶場で武器や音骸に。大成功すればS級確定の一撃</li>
         </ul>
       </div>
     </div>
@@ -405,21 +415,43 @@
     <div class="feature reveal">
       <div>
         <span class="ftag">COMBAT</span>
-        <h3>選ぶのは、ひとつだけでいい。</h3>
-        <p>残像（モンスター）に挑む討伐は、攻撃・重撃・スキルの三すくみをワンタップで選ぶだけ。長い駆け引きは不要、結果はすぐにわかる。</p>
+        <h3>選ぶのは、5手先まで。</h3>
+        <p>残像との戦いは三すくみの5ターン制。攻撃・重撃・スキルを5手分予約すると、自動でバトルが進行します。装備ドロップには個体値グレード（S級など）があり、同じ武器名でも当たり外れがあります。</p>
         <ul>
           <li>🟢雑魚 / 🟡中ボス / 🔴大ボスの3段階、スタミナは1時間で1回復</li>
-          <li>勝つたびにコイン・経験値・名声を獲得</li>
-          <li>運が良ければ武器や音骸がレアドロップ、所持は最大3つまで</li>
+          <li>5手予約が埋まると自動観戦形式で戦闘が進行</li>
+          <li>勝つたびにコイン・経験値・名声を獲得、敗北時もダメージ量に応じた部分報酬</li>
+          <li>武器や音骸は個体値（S/A/B/C/D）付き、所持は最大3つまで</li>
         </ul>
       </div>
       <div class="threat-box">
         <div class="who">⚔️ 残像討伐ログ</div>
-        <p>「あなた：✨スキル　vs　相手：⚔️攻撃 — 判定：有利（読み勝ち）」一瞬の選択が勝敗を分ける。三すくみを制する者が、戦場を制す。</p>
+        <p>「T1: ✨スキル vs ⚔️攻撃 — 有利（読み勝ち）」5ターン分の構えを先に予約し、自動でバトルが進行。三すくみの読みが勝敗を分ける。</p>
         <div class="threat-choices">
           <div class="tc fight">🏆 VICTORY +装備ドロップ</div>
           <div class="tc bribe">🏅 名声 +EXP</div>
         </div>
+      </div>
+    </div>
+
+    <div class="feature rev reveal">
+      <div>
+        <div class="visual-card">
+          <div class="fv-line"><span>家の階数</span><span class="v dot">🏠 2F</span></div>
+          <div class="fv-line"><span>飾り付けスロット</span><span class="v dot">🖼️ 8 / 12</span></div>
+          <div class="fv-line"><span>訪問ギフト</span><span class="v dot">🎁 1日1回</span></div>
+          <div class="fv-line"><span>テーマ・称号</span><span class="v dot">🌊 港町スタイル</span></div>
+        </div>
+      </div>
+      <div>
+        <span class="ftag">ESTATE</span>
+        <h3>戦利品を、自分の家に飾る。</h3>
+        <p>経済とは独立した社交コンテンツ。釣り図鑑のレア魚、討伐装備、宝物庫アイテムを飾り棚に並べられます。他の商人の家を訪問してギフトを置くことも。</p>
+        <ul>
+          <li>1Fから3Fまで拡張できる戸建てのみ</li>
+          <li>見た目・色・称号・テーマをカスタマイズ</li>
+          <li>家 @ユーザー で訪問・ギフト（1日1回・100コイン）</li>
+        </ul>
       </div>
     </div>
   </div>
@@ -429,15 +461,20 @@
   <div class="wrap">
     <div class="sec-label reveal">最初の一歩</div>
     <h2 class="sec-title reveal">覚えるコマンドは、少しでいい。</h2>
-    <p class="sec-sub reveal">メニューに沿って進めば、必要なコマンドは自然と身につく。まずはこの6つから。</p>
+    <p class="sec-sub reveal">メニューに沿って進めば、必要なコマンドは自然と身につく。多くは `!` 不要。まずはこの10個から。</p>
 
     <div class="cmd-grid">
       <div class="cmd reveal"><span class="tag dot">価格</span><p>市場のメニューを開く。売買・予測・旅・経済、すべてにアクセスできる。</p></div>
       <div class="cmd reveal"><span class="tag dot">バッグ</span><p>所持品と容量を確認。拡張すれば、もっと多く運べるようになる。</p></div>
       <div class="cmd reveal"><span class="tag dot">宝物庫</span><p>落札した品の保管状況とレア度を確認する、あなただけの蔵。</p></div>
       <div class="cmd reveal"><span class="tag dot">採掘</span><p>9分かけて地域の鉱石を掘る。掘削機を育てれば一度に掘れる量が増える。</p></div>
-      <div class="cmd reveal"><span class="tag dot">討伐</span><p>残像に三すくみのワンタップ勝負を挑む。勝てば装備がドロップすることも。</p></div>
-      <div class="cmd reveal"><span class="tag dot">ヘルプ</span><p>市場・宝物庫・釣り・採掘・討伐・ロールまで、8ページで網羅したガイド。</p></div>
+      <div class="cmd reveal"><span class="tag dot">討伐</span><p>討伐対象を選び、5手の構えを予約する。5ターン制HPバトルで装備を狙おう。</p></div>
+      <div class="cmd reveal"><span class="tag dot">鍛冶</span><p>鉱石とコインで装備を製造。個体値と大成功のチャンスあり。</p></div>
+      <div class="cmd reveal"><span class="tag dot">魚屋</span><p>釣った魚を料理して売却ボーナスを得る。`!` 不要。</p></div>
+      <div class="cmd reveal"><span class="tag dot">フリマ</span><p>魚・鉱石・装備の出品一覧。カテゴリボタンで切替。</p></div>
+      <div class="cmd reveal"><span class="tag dot">家</span><p>自分の家を管理（拡張・見た目・飾り付け）。`!` 不要。</p></div>
+      <div class="cmd reveal"><span class="tag dot">クールタイム通知</span><p>釣り・採掘・討伐のCD終了をDM通知（オプトイン）。</p></div>
+      <div class="cmd reveal"><span class="tag dot">ヘルプ</span><p>市場・釣り・採掘・討伐・フリマ・家・設定まで、カテゴリ別ガイド。</p></div>
     </div>
   </div>
 </section>
