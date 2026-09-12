@@ -227,6 +227,55 @@
 
   footer{border-top:3px solid var(--ink); padding:36px 0; display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; font-size:0.78rem; color:var(--ink-soft); font-weight:700;}
   .fmark{font-family:'DotGothic16'; color:var(--ink);}
+  /* ───── FAQ CHAT ───── */
+  .chat-launcher{
+    position:fixed; right:20px; bottom:20px; z-index:60;
+    display:flex; align-items:center; gap:8px;
+    background:var(--orange); color:#fff; border:3px solid var(--ink); border-radius:999px;
+    padding:12px 20px; font-family:'Zen Maru Gothic',sans-serif; font-weight:900; font-size:0.88rem;
+    cursor:pointer; box-shadow:4px 4px 0 rgba(58,46,38,0.25);
+  }
+  .chat-launcher:hover{transform:translate(-1px,-1px); box-shadow:5px 5px 0 rgba(58,46,38,0.3);}
+  .chat-panel{
+    position:fixed; right:20px; bottom:20px; z-index:61;
+    width:360px; max-width:calc(100vw - 32px); height:520px; max-height:calc(100vh - 40px);
+    background:var(--cream-2); border:4px solid var(--ink); border-radius:20px;
+    box-shadow:7px 7px 0 rgba(58,46,38,0.2); display:flex; flex-direction:column; overflow:hidden;
+  }
+  .chat-panel[hidden]{display:none;}
+  .chat-head{
+    background:var(--sea); color:var(--ink); border-bottom:3px solid var(--ink);
+    padding:12px 14px; display:flex; align-items:center; justify-content:space-between; gap:10px;
+  }
+  .chat-head b{font-family:'DotGothic16',sans-serif; font-size:0.92rem;}
+  .chat-head span{display:block; font-size:0.7rem; font-weight:700; color:var(--ink-soft);}
+  .chat-close{background:var(--cream-2); border:2px solid var(--ink); border-radius:10px; width:30px; height:30px; font-size:0.9rem; cursor:pointer; line-height:1;}
+  .chat-log{flex:1; min-height:180px; overflow-y:auto; padding:14px; display:flex; flex-direction:column; gap:10px;}
+  .msg{max-width:88%; font-size:0.84rem; line-height:1.75; padding:10px 13px; border:2px solid var(--ink); border-radius:14px; font-weight:500;}
+  .msg.bot{background:#fff; border-bottom-left-radius:4px; align-self:flex-start; color:var(--ink-soft);}
+  .msg.me{background:var(--sky-2); border-bottom-right-radius:4px; align-self:flex-end; color:var(--ink);}
+  .msg a{color:var(--wood); font-weight:900; text-decoration:underline;}
+  .msg code{font-family:'DotGothic16',sans-serif; background:var(--cream); padding:1px 6px; border-radius:6px;}
+  .chat-chips{display:flex; flex-wrap:wrap; gap:6px; padding:0 14px 10px; max-height:104px; overflow-y:auto;}
+  .chip{
+    background:#fff; border:2px solid var(--ink); border-radius:999px; padding:6px 12px;
+    font-family:'Zen Maru Gothic',sans-serif; font-size:0.74rem; font-weight:700; color:var(--ink-soft); cursor:pointer;
+  }
+  .chip:hover{background:var(--cream);}
+  .chat-form{display:flex; gap:8px; padding:10px 12px; border-top:3px solid var(--ink); background:var(--cream);}
+  .chat-form input{
+    flex:1; min-width:0; border:2px solid var(--ink); border-radius:10px; padding:9px 12px;
+    font-family:'Zen Maru Gothic',sans-serif; font-size:0.82rem; background:#fff; color:var(--ink);
+  }
+  .chat-form button{
+    border:2px solid var(--ink); border-radius:10px; background:var(--orange); color:#fff;
+    font-family:'Zen Maru Gothic',sans-serif; font-weight:900; font-size:0.8rem; padding:0 14px; cursor:pointer;
+  }
+  .chat-note{font-size:0.66rem; color:var(--ink-soft); text-align:center; padding:0 12px 10px; background:var(--cream);}
+  @media (max-width:520px){
+    .chat-panel{right:8px; left:8px; bottom:8px; width:auto; height:min(78vh,560px);}
+    .chat-launcher{right:12px; bottom:12px; padding:11px 16px; font-size:0.8rem;}
+  }
 </style>
 </head>
 <body>
@@ -494,7 +543,14 @@
 <footer>
   <div class="wrap" style="display:flex; justify-content:space-between; flex-wrap:wrap; gap:14px; width:100%;">
     <span class="fmark">⛵ シェルマート — 鳴潮市場</span>
+    <span style="display:flex; gap:16px; flex-wrap:wrap;">
+      <a href="./terms.html" style="text-decoration:underline;">利用規約</a>
+      <a href="./privacy.html" style="text-decoration:underline;">プライバシーポリシー</a>
+    </span>
     <span>Wuthering Waves JP Community Project</span>
+  </div>
+  <div class="wrap" style="width:100%; margin-top:10px; font-size:0.72rem; opacity:0.85;">
+    本Botは鳴潮JPコミュニティの有志による非公式のファン制作物であり、Kuro Games社とは関係ありません。
   </div>
 </footer>
 
@@ -506,6 +562,168 @@
     });
   }, {threshold:0.12});
   revealEls.forEach(el=>io.observe(el));
+</script>
+
+<!-- ───── FAQ自動応答チャット（サーバー不要・ルールベース。入力内容はどこにも送信されません） ───── -->
+<button class="chat-launcher" id="chatLauncher" aria-expanded="false" aria-controls="chatPanel">💬 はじめての方へ</button>
+
+<div class="chat-panel" id="chatPanel" role="dialog" aria-label="よくある質問チャット" hidden>
+  <div class="chat-head">
+    <div>
+      <b>⛵ 案内所</b>
+      <span>よくある質問に自動でお答えします</span>
+    </div>
+    <button class="chat-close" id="chatClose" aria-label="チャットを閉じる">✕</button>
+  </div>
+  <div class="chat-log" id="chatLog" aria-live="polite"></div>
+  <div class="chat-chips" id="chatChips"></div>
+  <form class="chat-form" id="chatForm">
+    <input id="chatInput" type="text" autocomplete="off" placeholder="質問を入力（例: 参加方法）" aria-label="質問を入力">
+    <button type="submit">送信</button>
+  </form>
+  <p class="chat-note">※ この案内所は定型文で答える簡易チャットです。入力内容は送信・保存されません。</p>
+</div>
+
+<script>
+(function(){
+  // 質問と回答の対応表。keys のいずれかが入力に含まれていれば該当の回答を返す
+  // （一致した keys が多いものを優先）。回答は最小限のHTMLを許可する。
+  const FAQ = [
+    {
+      id:'join', chip:'参加方法',
+      keys:['参加','入り','招待','どこで','はじめ方','始め方','やり方','discord','サーバー'],
+      a:'鳴潮JPコミュニティのDiscordサーバーに参加すると、そのまま遊べます。<br><a href="https://discord.gg/PVCrWrmPuK" target="_blank" rel="noopener">サーバーに参加する</a><br>参加したら、対応チャンネルで <code>価格</code> と送ってみてください。メニューが開きます。'
+    },
+    {
+      id:'start', chip:'最初にやること',
+      keys:['最初','初心者','何から','スタート','チュートリアル','初日'],
+      a:'①<code>価格</code> でメニューを開く → ②安い商品を買う → ③別の地域へ移動して売る、が基本の流れです。初期所持金は1,000シェルコイン、最初の3日間は予測コマンドも無料で使えます。'
+    },
+    {
+      id:'command', chip:'コマンドを知りたい',
+      keys:['コマンド','一覧','ヘルプ','help','使い方','操作'],
+      a:'よく使うのは <code>価格</code> <code>バッグ</code> <code>宝物庫</code> <code>採掘</code> <code>討伐</code> <code>鍛冶</code> <code>魚屋</code> <code>フリマ</code> <code>家</code> です。<a href="#commands">コマンド一覧はこちら</a>。Discord内では <code>ヘルプ</code> でカテゴリ別ガイドが開きます。'
+    },
+    {
+      id:'energy', chip:'交易力って？',
+      keys:['交易力','スタミナ','行動力','回復','待ち','クールタイム','クールダウン'],
+      a:'売買に使う行動力が「交易力」で、1時間に1回復します（上限20）。釣り・採掘・討伐はそれぞれ別のクールタイム／スタミナで動くので、交易力が切れてもできることはあります。'
+    },
+    {
+      id:'money', chip:'課金はある？',
+      keys:['課金','有料','無料','値段','料金','お金がかかる','支払い','決済'],
+      a:'完全無料です。課金要素・有料機能はありません。ゲーム内の「シェルコイン」はゲーム内だけの数値で、現実のお金と交換することはできません（<a href="./terms.html">利用規約 3条</a>）。'
+    },
+    {
+      id:'data', chip:'どんなデータを保存してる？',
+      keys:['データ','個人情報','保存','プライバシー','情報','収集','ログ'],
+      a:'保存するのは、Discordの数値ユーザーidと、コイン・所持品・進行状況などのゲームデータだけです。メッセージ本文やメールアドレス等は取得しません。詳しくは<a href="./privacy.html">プライバシーポリシー</a>をご覧ください。'
+    },
+    {
+      id:'delete', chip:'データを削除したい',
+      keys:['削除','消し','退会','やめ','引退','消したい','リセット'],
+      a:'運営にご連絡いただければ、あなたのゲームデータを削除します。Discordのユーザー名とユーザーidを添えて、運営者宛DMまたはメールでご依頼ください。手順は<a href="./privacy.html">プライバシーポリシー 5章</a>に記載しています（削除後は元に戻せません）。'
+    },
+    {
+      id:'terms', chip:'利用規約を見たい',
+      keys:['規約','ルール','禁止','違反','権利','著作'],
+      a:'<a href="./terms.html">利用規約</a>と<a href="./privacy.html">プライバシーポリシー</a>をご用意しています。バグの悪用・マクロ・複数アカウントでの重複取得などは禁止です。'
+    },
+    {
+      id:'bug', chip:'不具合を報告したい',
+      keys:['不具合','バグ','エラー','動かない','反応しない','おかしい','報告','問い合わせ','連絡'],
+      a:'運営Discordサーバーの運営者宛DM、またはお問い合わせ用メールアドレス（<a href="./terms.html">利用規約 12条</a>に記載）までご連絡ください。発生時刻・使ったコマンド・表示されたメッセージを添えていただけると助かります。'
+    },
+    {
+      id:'anon', chip:'名前を隠したい',
+      keys:['匿名','名前','表示名','隠','ランキングに出','プロフィール'],
+      a:'<code>匿名</code> コマンドで、市場内の表示名を「漂泊者」に切り替えられます。クールタイム通知のDMも <code>クールタイム通知</code> でオン／オフを変更できます。'
+    },
+    {
+      id:'content', chip:'何ができるの？',
+      keys:['何ができ','コンテンツ','遊び','釣り','採掘','討伐','フリマ','家','オークション','宝物'],
+      a:'市場での売買を軸に、釣り・採掘・討伐・鍛冶・オークション・宝物庫・フリマ・家（インテリア）まで揃っています。<a href="#features">商人の道</a>のセクションで、それぞれの遊び方を紹介しています。'
+    }
+  ];
+
+  const FALLBACK = 'すみません、その質問にはまだ自動でお答えできません。<br>下のボタンから近いものを選ぶか、運営Discordサーバーの運営者宛DM、または<a href="./terms.html">利用規約 12条</a>のメールアドレスへお問い合わせください。';
+
+  const launcher = document.getElementById('chatLauncher');
+  const panel    = document.getElementById('chatPanel');
+  const closeBtn = document.getElementById('chatClose');
+  const log      = document.getElementById('chatLog');
+  const chips    = document.getElementById('chatChips');
+  const form     = document.getElementById('chatForm');
+  const input    = document.getElementById('chatInput');
+  let greeted = false;
+
+  function addMessage(html, who){
+    const el = document.createElement('div');
+    el.className = 'msg ' + who;
+    el.innerHTML = html;
+    log.appendChild(el);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function answerFor(text){
+    const q = text.toLowerCase();
+    let best = null;
+    let bestScore = 0;
+    for(const item of FAQ){
+      const score = item.keys.filter(k => q.includes(k)).length;
+      if(score > bestScore){ best = item; bestScore = score; }
+    }
+    return best ? best.a : FALLBACK;
+  }
+
+  function renderChips(){
+    chips.innerHTML = '';
+    FAQ.forEach(item => {
+      const b = document.createElement('button');
+      b.type = 'button';
+      b.className = 'chip';
+      b.textContent = item.chip;
+      b.addEventListener('click', () => { ask(item.chip, item.a); });
+      chips.appendChild(b);
+    });
+  }
+
+  function ask(text, forcedAnswer){
+    addMessage(text.replace(/[<>]/g, ''), 'me');
+    // 少し間を置いて返すと、会話らしく見える
+    setTimeout(() => addMessage(forcedAnswer || answerFor(text), 'bot'), 260);
+  }
+
+  function open(){
+    panel.hidden = false;
+    launcher.setAttribute('aria-expanded','true');
+    launcher.hidden = true;
+    if(!greeted){
+      greeted = true;
+      addMessage('ようこそ、シェルマート案内所へ。⛵<br>参加方法・遊び方・データの取り扱いなど、よくある質問にお答えします。下のボタンからも選べます。', 'bot');
+      renderChips();
+    }
+    input.focus();
+  }
+
+  function close(){
+    panel.hidden = true;
+    launcher.hidden = false;
+    launcher.setAttribute('aria-expanded','false');
+    launcher.focus();
+  }
+
+  launcher.addEventListener('click', open);
+  closeBtn.addEventListener('click', close);
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape' && !panel.hidden) close(); });
+  form.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = input.value.trim();
+    if(!text) return;
+    input.value = '';
+    ask(text);
+  });
+})();
 </script>
 
 </body>
